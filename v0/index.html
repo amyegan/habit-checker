@@ -1,0 +1,37 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+
+<body>
+  <!--Suggest that IE users update for a better experience. Credit https://html5boilerplate.com/-->
+  <!--[if IE]>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+  <![endif]-->
+
+  <p>Click the button if you did the thing today.</p>
+  <button type="button" onclick="recordHabitDone()">I did the thing today</button>
+
+  <hr />
+
+  <div id="tracker"></div>
+
+  <script>
+    const recordHabitDone = () => {
+      const trackerList = document.getElementById('tracker');
+      const message = 'Habit done on ' + new Date();
+      const newListItem = document.createElement('p');
+
+      newListItem.append(message);
+      trackerList.append(newListItem);
+    }
+  </script>
+</body>
+
+</html>
