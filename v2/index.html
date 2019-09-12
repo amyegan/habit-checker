@@ -1,0 +1,110 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/milligram.css">
+</head>
+
+<body>
+  <!--Suggest that IE users update for a better experience. Credit https://html5boilerplate.com/ -->
+  <!--[if IE]>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+  <![endif]-->
+
+  <p>Click the button if you did the thing today.</p>
+  <button type="button" onclick="recordHabitDone()">I did the thing today</button>
+  <button type="button" onclick="saveHabitRecords()">Save Habit Records</button>
+
+  <hr />
+
+  <div id="tracker" class="container">
+    <div class="row">
+      <div class="column"></div>
+    </div>
+  </div>
+
+  <script>
+    const habitRecordsFile = 'habit-tracker';
+    let habitRecordsArray = [];
+
+    // Load habit record from localStorage after document loaded
+    window.addEventListener('DOMContentLoaded', (event) => {
+      //loadHabitRecords();
+    });
+
+    function recordHabitDone(index) {
+      const date = (new Date()).setHours(0, 0, 0, 0);
+      let recordToUpdate = habitRecordsArray[index];
+
+      recordToUpdate.checked = true;
+      displayRecord(recordToUpdate.date);
+    }
+
+    function displayRecord(date) {
+      const trackerList = document.getElementById('tracker');
+      let currentRow = trackerList.children[0];
+      const newListItem = document.createElement('div');
+      newListItem.classList('col')
+      const message = 'Habit done on ' + date;
+
+      newListItem.append(message);
+      trackerList.append(newListItem);
+    }
+
+    function initRecordsArray() {
+      const today = (new Date()).setHours(0, 0, 0, 0);
+      let minDate = today;
+      let dateOffset = (24 * 60 * 60 * 1000) * 7;
+      minDate.setTime(minDate.getTime() - dateOffset);
+
+      for (let i = today; i <= minDate; i.setDate(i.getDate() - 1)) {
+        habitRecordsArray.push({
+          date: i,
+          checked: false
+        });
+      }
+      console.log('init habit array', habitRecordsArray);
+    }
+
+    function initRecordsGrid() {
+      const trackerList = document.getElementById('tracker');
+      habitRecordsArray.forEach({
+
+      })
+
+      let currentRow = trackerList.children[0];
+      const newListItem = document.createElement('div');
+      newListItem.classList('col');
+      const message = 'Habit done on ' + date;
+    }
+
+    function addDays(date, numberOfDays) {
+      let dateOffset = (24 * 60 * 60 * 1000) * numberOfDays;
+      date.setTime(date.getTime() + dateOffset);
+    }
+
+    function loadHabitRecords() {
+      const localHabitRecords = window.localStorage.getItem(habitRecordsFile);
+
+
+      if (localHabitRecords) {
+        habitRecordsArray = JSON.parse(localHabitRecords);
+      }
+
+      habitRecordsArray.forEach(dateString => {
+        displayRecord(new Date(dateString));
+      });
+    }
+
+    function saveHabitRecords() {
+      const jsonString = JSON.stringify(habitRecordsArray);
+      window.localStorage.setItem(habitRecordsFile, jsonString);
+    }
+  </script>
+</body>
+
+</html>
