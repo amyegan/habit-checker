@@ -1,67 +1,74 @@
-<!doctype html>
+<!DOCTYPE html>
 <html class="no-js" lang="">
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  </head>
 
-<head>
-  <meta charset="utf-8">
-  <title></title>
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-</head>
+  <body>
+    <!--Suggest that IE users update for a better experience. Credit https://html5boilerplate.com/-->
+    <!--[if IE]>
+      <p class="browserupgrade">
+        You are using an <strong>outdated</strong> browser. Please
+        <a href="https://browsehappy.com/">upgrade your browser</a> to improve
+        your experience and security.
+      </p>
+    <![endif]-->
 
-<body>
-  <!--Suggest that IE users update for a better experience. Credit https://html5boilerplate.com/-->
-  <!--[if IE]>
-    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
-  <![endif]-->
+    <p>Click the button if you did the thing today.</p>
+    <button type="button" onclick="recordHabitDone()">
+      I did the thing today
+    </button>
+    <button type="button" onclick="saveHabitRecords()">
+      Save Habit Records
+    </button>
 
-  <p>Click the button if you did the thing today.</p>
-  <button type="button" onclick="recordHabitDone()">I did the thing today</button>
-  <button type="button" onclick="saveHabitRecords()">Save Habit Records</button>
+    <hr />
 
-  <hr />
+    <div id="tracker"></div>
 
-  <div id="tracker"></div>
+    <script>
+      const habitRecordsFile = "habit-tracker";
+      let habitRecordsArray = [];
 
-  <script>
-    const habitRecordsFile = 'habit-tracker';
-    let habitRecordsArray = [];
+      // Load habit record from localStorage after document loaded
+      window.addEventListener("DOMContentLoaded", event => {
+        loadHabitRecords();
+      });
 
-    $(function () {
-      loadHabitRecords();
-    });
+      const recordHabitDone = () => {
+        const date = new Date();
+        displayRecord(date);
 
-    const recordHabitDone = () => {
-      const date = new Date();
-      displayRecord(date);
+        habitRecordsArray.push(date);
+      };
+      function displayRecord(date) {
+        const trackerList = document.getElementById("tracker");
+        const newListItem = document.createElement("p");
+        const message = "Habit done on " + date;
 
-      habitRecordsArray.push(date);
-    }
-    function displayRecord(date) {
-      const trackerList = document.getElementById('tracker');
-      const newListItem = document.createElement('p');
-      const message = 'Habit done on ' + date;
-
-      newListItem.append(message);
-      trackerList.append(newListItem);
-    }
-
-    function loadHabitRecords() {
-      const localHabitRecords = localStorage.getItem(habitRecordsFile);
-      if (localHabitRecords) {
-        habitRecordsArray = JSON.parse(localHabitRecords);
+        newListItem.append(message);
+        trackerList.append(newListItem);
       }
 
-      habitRecordsArray.forEach(dateString => {
-        displayRecord(new Date(dateString));
-      });
-    }
+      function loadHabitRecords() {
+        const localHabitRecords = localStorage.getItem(habitRecordsFile);
+        if (localHabitRecords) {
+          habitRecordsArray = JSON.parse(localHabitRecords);
+        }
 
-    function saveHabitRecords() {
-      const jsonString = JSON.stringify(habitRecordsArray);
-      localStorage.setItem(habitRecordsFile, jsonString);
-    }
-  </script>
-</body>
+        habitRecordsArray.forEach(dateString => {
+          displayRecord(new Date(dateString));
+        });
+      }
 
+      function saveHabitRecords() {
+        const jsonString = JSON.stringify(habitRecordsArray);
+        localStorage.setItem(habitRecordsFile, jsonString);
+      }
+    </script>
+  </body>
 </html>

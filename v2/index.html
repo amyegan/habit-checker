@@ -1,110 +1,84 @@
-<!doctype html>
+<!DOCTYPE html>
 <html class="no-js" lang="">
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="css/milligram.css" />
+  </head>
 
-<head>
-  <meta charset="utf-8">
-  <title></title>
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="css/milligram.css">
-</head>
+  <body>
+    <!--Suggest that IE users update for a better experience. Credit https://html5boilerplate.com/-->
+    <!--[if IE]>
+      <p class="browserupgrade">
+        You are using an <strong>outdated</strong> browser. Please
+        <a href="https://browsehappy.com/">upgrade your browser</a> to improve
+        your experience and security.
+      </p>
+    <![endif]-->
 
-<body>
-  <!--Suggest that IE users update for a better experience. Credit https://html5boilerplate.com/ -->
-  <!--[if IE]>
-    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
-  <![endif]-->
+    <p>Click the button if you did the thing today.</p>
+    <button type="button" onclick="recordHabitDone()">
+      I did the thing today
+    </button>
 
-  <p>Click the button if you did the thing today.</p>
-  <button type="button" onclick="recordHabitDone()">I did the thing today</button>
-  <button type="button" onclick="saveHabitRecords()">Save Habit Records</button>
+    <hr />
 
-  <hr />
+    <div id="tracker"></div>
 
-  <div id="tracker" class="container">
-    <div class="row">
-      <div class="column"></div>
-    </div>
-  </div>
+    <script>
+      const habitRecordsFile = "habit-tracker";
+      let habitRecordsArray = [];
 
-  <script>
-    const habitRecordsFile = 'habit-tracker';
-    let habitRecordsArray = [];
+      // Load habit record from localStorage after document loaded
+      window.addEventListener("DOMContentLoaded", event => {
+        loadHabitRecords();
+      });
 
-    // Load habit record from localStorage after document loaded
-    window.addEventListener('DOMContentLoaded', (event) => {
-      //loadHabitRecords();
-    });
+      const recordHabitDone = () => {
+        const date = new Date(new Date().toDateString());
+        const dateAlreadyInArray = habitRecordsArray.some(
+          record => record.toDateString() === date.toDateString()
+        );
+        if (dateAlreadyInArray) {
+          return;
+        }
 
-    function recordHabitDone(index) {
-      const date = (new Date()).setHours(0, 0, 0, 0);
-      let recordToUpdate = habitRecordsArray[index];
+        displayRecord(date);
+        habitRecordsArray.push(date);
+        saveHabitRecords();
+      };
 
-      recordToUpdate.checked = true;
-      displayRecord(recordToUpdate.date);
-    }
+      function displayRecord(date) {
+        const tracker = document.getElementById("tracker");
+        const newItem = document.createElement("div");
+        const message = "Done on " + date.toLocaleDateString("en-us");
 
-    function displayRecord(date) {
-      const trackerList = document.getElementById('tracker');
-      let currentRow = trackerList.children[0];
-      const newListItem = document.createElement('div');
-      newListItem.classList('col')
-      const message = 'Habit done on ' + date;
+        newItem.append(message);
+        tracker.append(newItem);
+      }
 
-      newListItem.append(message);
-      trackerList.append(newListItem);
-    }
+      function loadHabitRecords() {
+        const localHabitRecords = localStorage.getItem(habitRecordsFile);
+        if (localHabitRecords) {
+          const recordsFromLocalStorage = JSON.parse(localHabitRecords);
+          recordsFromLocalStorage.forEach(record => {
+            recordDate = new Date(record);
+            habitRecordsArray.push(recordDate);
+            displayRecord(recordDate);
+          });
+        }
 
-    function initRecordsArray() {
-      const today = (new Date()).setHours(0, 0, 0, 0);
-      let minDate = today;
-      let dateOffset = (24 * 60 * 60 * 1000) * 7;
-      minDate.setTime(minDate.getTime() - dateOffset);
-
-      for (let i = today; i <= minDate; i.setDate(i.getDate() - 1)) {
-        habitRecordsArray.push({
-          date: i,
-          checked: false
+        habitRecordsArray.forEach(dateString => {
+          displayRecord(new Date(dateString));
         });
       }
-      console.log('init habit array', habitRecordsArray);
-    }
 
-    function initRecordsGrid() {
-      const trackerList = document.getElementById('tracker');
-      habitRecordsArray.forEach({
-
-      })
-
-      let currentRow = trackerList.children[0];
-      const newListItem = document.createElement('div');
-      newListItem.classList('col');
-      const message = 'Habit done on ' + date;
-    }
-
-    function addDays(date, numberOfDays) {
-      let dateOffset = (24 * 60 * 60 * 1000) * numberOfDays;
-      date.setTime(date.getTime() + dateOffset);
-    }
-
-    function loadHabitRecords() {
-      const localHabitRecords = window.localStorage.getItem(habitRecordsFile);
-
-
-      if (localHabitRecords) {
-        habitRecordsArray = JSON.parse(localHabitRecords);
+      function saveHabitRecords() {
+        const jsonString = JSON.stringify(habitRecordsArray);
+        localStorage.setItem(habitRecordsFile, jsonString);
       }
-
-      habitRecordsArray.forEach(dateString => {
-        displayRecord(new Date(dateString));
-      });
-    }
-
-    function saveHabitRecords() {
-      const jsonString = JSON.stringify(habitRecordsArray);
-      window.localStorage.setItem(habitRecordsFile, jsonString);
-    }
-  </script>
-</body>
-
+    </script>
+  </body>
 </html>
