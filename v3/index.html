@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html class="no-js" lang="">
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="css/milligram.css" />
+    <style>
+      .checked {
+        color: darkgreen;
+        font-weight: 700;
+      }
+      .unchecked {
+        color: firebrick;
+        font-style: italic;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!--Suggest that IE users update for a better experience. Credit https://html5boilerplate.com/-->
+    <!--[if IE]>
+      <p class="browserupgrade">
+        You are using an <strong>outdated</strong> browser. Please
+        <a href="https://browsehappy.com/">upgrade your browser</a> to improve
+        your experience and security.
+      </p>
+    <![endif]-->
+
+    <p>Click the button if you did the thing today.</p>
+    <button type="button" onclick="recordHabitDone()">
+      I did the thing today
+    </button>
+
+    <hr />
+
+    <div id="tracker"></div>
+
+    <script src="./js/script.js"></script>
+  </body>
+</html>

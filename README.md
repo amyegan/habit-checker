@@ -1,5 +1,7 @@
 # Getting Started on Your First Project
 
+## Build Your Own Project
+
 1. Come up with an idea
    - common, uninspiring suggestions: calculator, to-do list
    - Slime Rancher plort market chart - maximize your plort profits
@@ -17,7 +19,7 @@
 3. Pick one foundational feature. Build the most basic version to start.
    - Building the HTML page with inputs to accept plort prices
 4. After that is built, pick one more feature that can be added on top of this.
-   - Add tolerance % input to the page
+   - Add tolerance % input to the pIdentify your own requirementsage
 5. After the new feature is added, identify another small feature and add it. Repeat.
    - Calculate allowable % less than max
    - Display the lowest tolerable prices next to the highest prices
@@ -27,23 +29,8 @@
 
 Don't let perfect be the enemy of good. Focus on getting it to work first, then refactor to make it a "better" solution.
 
-## Habit Checker
+## Contributing to Projects on Github
 
-### v0
-
-- button to mark habit done
-- list of times the button was clicked
-
-### v1
-
-- save record to localStorage
-- load record from localStorage
-
-### v2
-
-- add some css
-- add a grid to display the habit records
-
-### v3
-
-- click button in grid to toggle habit done/not done
+https://www.firsttimersonly.com/
+https://github.com/MunGell/awesome-for-beginners
+https://dev.to/highflyer910/the-beginners-guide-to-contributing-to-projects-with-githubdesktop-46o3
